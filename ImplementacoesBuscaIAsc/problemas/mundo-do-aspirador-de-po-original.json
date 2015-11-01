@@ -1,0 +1,152 @@
+{
+    "problema": {
+        "nome": "Mundo do aspirador de pó",
+        "variaveis": [
+            "comodo_da_esquerda_limpo",
+            "comodo_da_direita_limpo",
+            "robo_em_sala_esquerda"
+        ],
+        "acoes": [
+            "mover_para_comodo_da_esquerda",
+            "mover_para_comodo_da_direita",
+            "aspirar_sujeira_comodo_atual"
+        ],
+        "estado-inicial": "s0",
+        "estados": {
+            "s0": [
+                false,
+                false,
+                false
+            ],
+            "s1": [
+                false,
+                false,
+                true
+            ],
+            "s2": [
+                false,
+                true,
+                false
+            ],
+            "s3": [
+                false,
+                true,
+                true
+            ],
+            "s4": [
+                true,
+                false,
+                false
+            ],
+            "s5": [
+                true,
+                false,
+                true
+            ],
+            "s6": [
+                true,
+                true,
+                false
+            ],
+            "s7": [
+                true,
+                true,
+                true
+            ]
+        },
+        "transicoes": {
+            "s0": [
+                {
+                    "mover_para_comodo_da_esquerda": "s1"
+                },
+                {
+                    "mover_para_comodo_da_direita": "s0"
+                },
+                {
+                    "aspirar_sujeira_comodo_atual": "s2"
+                }
+            ],
+            "s1": [
+                {
+                    "mover_para_comodo_da_esquerda": "s1"
+                },
+                {
+                    "mover_para_comodo_da_direita": "s0"
+                },
+                {
+                    "aspirar_sujeira_comodo_atual": "s5"
+                }
+            ],
+            "s2": [
+                {
+                    "mover_para_comodo_da_esquerda": "s3"
+                },
+                {
+                    "mover_para_comodo_da_direita": "s2"
+                },
+                {
+                    "aspirar_sujeira_comodo_atual": "s2"
+                }
+            ],
+            "s3": [
+                {
+                    "mover_para_comodo_da_esquerda": "s3"
+                },
+                {
+                    "mover_para_comodo_da_direita": "s2"
+                },
+                {
+                    "aspirar_sujeira_comodo_atual": "s7"
+                }
+            ],
+            "s4": [
+                {
+                    "mover_para_comodo_da_esquerda": "s5"
+                },
+                {
+                    "mover_para_comodo_da_direita": "s4"
+                },
+                {
+                    "aspirar_sujeira_comodo_atual": "s6"
+                }
+            ],
+            "s5": [
+                {
+                    "mover_para_comodo_da_esquerda": "s5"
+                },
+                {
+                    "mover_para_comodo_da_direita": "s4"
+                },
+                {
+                    "aspirar_sujeira_comodo_atual": "s5"
+                }
+            ],
+            "s6": [
+                {
+                    "mover_para_comodo_da_esquerda": "s7"
+                },
+                {
+                    "mover_para_comodo_da_direita": "s6"
+                },
+                {
+                    "aspirar_sujeira_comodo_atual": "s6"
+                }
+            ],
+            "s7": [
+                {
+                    "mover_para_comodo_da_esquerda": "s7"
+                },
+                {
+                    "mover_para_comodo_da_direita": "s6"
+                },
+                {
+                    "aspirar_sujeira_comodo_atual": "s7"
+                }
+            ]
+        },
+        "estados-meta": [
+            "s6",
+            "s7"
+        ]
+    }
+}
