@@ -6,10 +6,19 @@ import java.util.Scanner;
 
 /**
  * Classe usada para ler arquivos.
+ * 
  * @author felipemartinsss
  *
  */
 public class LeitorDeArquivos {
+	/**
+	 * Método que devolve o conteúdo em texto de um arquivo. Entrada: O caminho
+	 * que indica o arquivo a ser carregado. Saída: O texto contido no arquivo.
+	 * 
+	 * @param nomeArquivo
+	 * @return
+	 * @throws FileNotFoundException
+	 */
 	public static String getConteudoArquivo(String nomeArquivo)
 			throws FileNotFoundException {
 		Scanner leitor = new Scanner(new File("problemas/" + nomeArquivo));

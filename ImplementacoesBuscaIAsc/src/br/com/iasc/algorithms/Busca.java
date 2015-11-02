@@ -14,8 +14,9 @@ import br.com.iasc.json.ParserDeProblemas;
 
 /**
  * Classe abstrata para representar uma implementação de algoritmos de busca.
- * Possui todos os atributos e métodos básicos e comuns 
- * às diferentes implementações de algoritmos.
+ * Possui todos os atributos e métodos básicos e comuns às diferentes
+ * implementações de algoritmos.
+ * 
  * @author felipemartinsss
  *
  */
@@ -29,9 +30,10 @@ public abstract class Busca {
 	protected Map<Estado, Integer> profundidadeEstado;
 
 	/**
-	 * Construtor.
-	 * Entrada: Recebe um parser de problemas para reconhecer o arquivo JSON e 
-	 * uma instância do Problema parcialmente carregado em memória.
+	 * Construtor. Entrada: Recebe um parser de problemas para reconhecer o
+	 * arquivo JSON e uma instância do Problema parcialmente carregado em
+	 * memória.
+	 * 
 	 * @param pp
 	 * @param problema
 	 */
@@ -47,9 +49,10 @@ public abstract class Busca {
 
 	/**
 	 * Método que devolve uma sequência de ações até alcançar um estado meta.
-	 * Entrada: dado um último estado, esse método encontra a partir da 
-	 * estrutura de predecessores, quais estados foram acessado antes 
-	 * desse e que ações foram usadas.
+	 * Entrada: dado um último estado, esse método encontra a partir da
+	 * estrutura de predecessores, quais estados foram acessado antes desse e
+	 * que ações foram usadas.
+	 * 
 	 * @param ultimoEstado
 	 * @return
 	 */
@@ -73,8 +76,9 @@ public abstract class Busca {
 	}
 
 	/**
-	 * Método abstrato que deve ser implementado por qualquer 
-	 * classe filha de Busca.
+	 * Método abstrato que deve ser implementado por qualquer classe filha de
+	 * Busca.
+	 * 
 	 * @return
 	 * @throws JSONException
 	 */

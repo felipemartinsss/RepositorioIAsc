@@ -10,9 +10,10 @@ import br.com.iasc.beans.Problema;
 import br.com.iasc.json.ParserDeProblemas;
 
 /**
- * Implemetação do algoritmo de busca conhecido como Busca em Profundidade.
- * O algoritmo usa a pilha estadosParaExploracao para definir quais estados 
- * serão visitados.
+ * Implemetação do algoritmo de busca conhecido como Busca em Profundidade. O
+ * algoritmo usa a pilha estadosParaExploracao para definir quais estados serão
+ * visitados.
+ * 
  * @author felipemartinsss
  *
  */
@@ -20,20 +21,20 @@ public class BuscaEmProfundidade extends Busca {
 	private Stack<Estado> estadosParaExploracao;
 
 	/**
-	 * Construtor.
-	 * Entrada: Um parser de problema para carregar dados do JSON e a instância atual do problema 
-	 * a ser resolvido.
+	 * Construtor. Entrada: Um parser de problema para carregar dados do JSON e
+	 * a instância atual do problema a ser resolvido.
+	 * 
 	 * @param pp
 	 * @param problema
 	 */
 	public BuscaEmProfundidade(ParserDeProblemas pp, Problema problema) {
 		super(pp, problema);
-		this.estadosParaExploracao = new Stack <Estado> ();
+		this.estadosParaExploracao = new Stack<Estado>();
 		System.out.println("Algoritmo " + getClass().getName());
 	}
 
 	/**
-	 * Método que realiza a busca em profundidade. 
+	 * Método que realiza a busca em profundidade.
 	 */
 	public List<String> buscarSolucao() throws JSONException {
 		String aliasEstadoInicial = this.problema.getAliasEstadoInicial();
@@ -57,14 +58,16 @@ public class BuscaEmProfundidade extends Busca {
 			this.problema = this.pp.carregaEstadosSucessores(this.problema,
 					estadoAtual.getAlias());
 			for (String acao : estadoAtual.getAcaoEstado().keySet()) {
-				String aliasSucessor = (String) estadoAtual.getAcaoEstado().get(acao);
+				String aliasSucessor = (String) estadoAtual.getAcaoEstado()
+						.get(acao);
 				Estado sucessor = this.pp.getEstadoPorAlias(this.problema,
 						aliasSucessor);
 				if (this.mapaEstadosDescobertos.get(sucessor) == null) {
 					this.mapaEstadosDescobertos.put(sucessor, true);
 					this.estadosParaExploracao.push(sucessor);
 					this.predecessores.put(sucessor, estadoAtual);
-					this.profundidadeEstado.put(sucessor, this.profundidadeEstado.get(estadoAtual) + 1);
+					this.profundidadeEstado.put(sucessor,
+							this.profundidadeEstado.get(estadoAtual) + 1);
 					this.acaoQueOrigina.put(sucessor, acao);
 				}
 			}
@@ -72,7 +75,8 @@ public class BuscaEmProfundidade extends Busca {
 		return getSolucao(ultimoEstado);
 	}
 
-	/** Método principal para a realização de testes.
+	/**
+	 * Método principal para a realização de testes.
 	 * 
 	 * @param args
 	 * @throws JSONException

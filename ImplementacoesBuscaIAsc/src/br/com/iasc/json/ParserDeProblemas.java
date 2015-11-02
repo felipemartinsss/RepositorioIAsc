@@ -17,8 +17,9 @@ import br.com.iasc.beans.Problema;
 import br.com.iasc.io.LeitorDeArquivos;
 
 /**
- * Classe usada para realiza o parsing dos arquivos .json que 
- * especificam problemas de Busca.
+ * Classe usada para realiza o parsing dos arquivos .json que especificam
+ * problemas de Busca.
+ * 
  * @author felipemartinsss
  *
  */
@@ -26,10 +27,9 @@ public class ParserDeProblemas {
 	private String conteudoArquivo;
 
 	/**
-	 * Construtor.
-	 * Entrada: Recebe um nome de arquivo e 
-	 * carrega o conteúdo do arquivo cujo 
-	 * nome foi fornecido.
+	 * Construtor. Entrada: Recebe um nome de arquivo e carrega o conteúdo do
+	 * arquivo cujo nome foi fornecido.
+	 * 
 	 * @param nomeArquivo
 	 */
 	public ParserDeProblemas(String nomeArquivo) {
@@ -42,6 +42,8 @@ public class ParserDeProblemas {
 	}
 
 	/**
+	 * Obtém uma instância básica do problema. Saída: Uma instância básica do
+	 * problema que possui apenas o estado inicial carregado em memória.
 	 * 
 	 * @return
 	 * @throws JSONException
@@ -56,14 +58,14 @@ public class ParserDeProblemas {
 		problema.setNome(jsonProblema.getString("nome"));
 
 		JSONArray jsonVariaveis = jsonProblema.getJSONArray("variaveis");
-		List<String> variaveis = new ArrayList <String> ();
+		List<String> variaveis = new ArrayList<String>();
 		for (int i = 0; i < jsonVariaveis.length(); i++) {
 			String nomeVariavel = jsonVariaveis.getString(i);
 			variaveis.add(nomeVariavel);
 		}
 		problema.setVariaveis(variaveis);
 
-		List<String> acoes = new ArrayList <String> ();
+		List<String> acoes = new ArrayList<String>();
 		JSONArray jsonAcoes = jsonProblema.getJSONArray("acoes");
 		for (int i = 0; i < jsonAcoes.length(); i++) {
 			String nomeAcao = jsonAcoes.getString(i);
@@ -77,21 +79,21 @@ public class ParserDeProblemas {
 		JSONObject jsonEstados = jsonProblema.getJSONObject("estados");
 		JSONArray jsonVariaveisEstadoSel = jsonEstados
 				.optJSONArray(aliasEstadoInicial);
-		List<Boolean> variaveisDeEstado = new ArrayList <Boolean> ();
+		List<Boolean> variaveisDeEstado = new ArrayList<Boolean>();
 		for (int i = 0; i < jsonVariaveisEstadoSel.length(); i++) {
 			variaveisDeEstado.add(Boolean.valueOf(jsonVariaveisEstadoSel
 					.getBoolean(i)));
 		}
 		Estado estado = new Estado(aliasEstadoInicial, variaveis,
 				variaveisDeEstado);
-		Set<Estado> estados = new HashSet <Estado> ();
+		Set<Estado> estados = new HashSet<Estado>();
 		estados.add(estado);
 		problema.setEstados(estados);
 
 		JSONObject jsonTransicoes = jsonProblema.getJSONObject("transicoes");
 		JSONArray jsonTransicoesDoEstado = jsonTransicoes
 				.getJSONArray(aliasEstadoInicial);
-		Map<String, String> acaoEstado = new HashMap <String, String> ();
+		Map<String, String> acaoEstado = new HashMap<String, String>();
 		for (int i = 0; i < jsonTransicoesDoEstado.length(); i++) {
 			JSONObject jsonTransicao = jsonTransicoesDoEstado.getJSONObject(i);
 			String acaoAtual = (String) acoes.get(i);
@@ -101,7 +103,7 @@ public class ParserDeProblemas {
 		problema.setAcaoEstado(acaoEstado);
 
 		JSONArray jsonEstadosMeta = jsonProblema.getJSONArray("estados-meta");
-		List<String> estadosMeta = new ArrayList <String> ();
+		List<String> estadosMeta = new ArrayList<String>();
 		for (int i = 0; i < jsonEstadosMeta.length(); i++) {
 			String meta = jsonEstadosMeta.getString(i);
 			estadosMeta.add(meta);
@@ -111,9 +113,20 @@ public class ParserDeProblemas {
 		return problema;
 	}
 
+	/**
+	 * Carrega estados sucessores de um estado em um problema. Entrada:
+	 * instância do problema e alias do estado no qual serão buscados os
+	 * sucessores. Saída: uma instância do problema atualizada com os sucessores
+	 * do estado cujo alias foi fornecido.
+	 * 
+	 * @param problema
+	 * @param aliasEstadoAtual
+	 * @return
+	 * @throws JSONException
+	 */
 	public Problema carregaEstadosSucessores(Problema problema,
 			String aliasEstadoAtual) throws JSONException {
-		List<Estado> estadosSucessores = new ArrayList <Estado> ();
+		List<Estado> estadosSucessores = new ArrayList<Estado>();
 		JSONObject mundoDoAspiradorDePo = new JSONObject(this.conteudoArquivo);
 		JSONObject jsonProblema = mundoDoAspiradorDePo
 				.getJSONObject("problema");
@@ -123,7 +136,7 @@ public class ParserDeProblemas {
 				.getJSONArray(aliasEstadoAtual);
 		Estado estado = getEstadoPorAlias(problema, aliasEstadoAtual);
 		List<String> acoes = problema.getAcoes();
-		Map<String, String> acaoEstado = new HashMap <String, String> ();
+		Map<String, String> acaoEstado = new HashMap<String, String>();
 		for (int i = 0; i < jsonTransicoesDoEstado.length(); i++) {
 			JSONObject jsonTransicao = jsonTransicoesDoEstado.getJSONObject(i);
 			String acao = (String) acoes.get(i);
@@ -131,7 +144,7 @@ public class ParserDeProblemas {
 			acaoEstado.put(acao, aliasEstadoSucessor);
 			JSONArray jsonVariaveisDoEstado = jsonEstados
 					.getJSONArray(aliasEstadoSucessor);
-			List<Boolean> variaveisDoEstado = new ArrayList <Boolean> ();
+			List<Boolean> variaveisDoEstado = new ArrayList<Boolean>();
 			for (int j = 0; j < jsonVariaveisDoEstado.length(); j++) {
 				variaveisDoEstado.add(Boolean.valueOf(jsonVariaveisDoEstado
 						.getBoolean(j)));
@@ -147,9 +160,17 @@ public class ParserDeProblemas {
 		return problema;
 	}
 
+	/**
+	 * 
+	 * @param problema
+	 * @param aliasEstadoAtual
+	 * @param acao
+	 * @return
+	 * @throws JSONException
+	 */
 	public Problema carregaEstadoSucessor(Problema problema,
 			String aliasEstadoAtual, String acao) throws JSONException {
-		List<Estado> estadosSucessores = new ArrayList <Estado>();
+		List<Estado> estadosSucessores = new ArrayList<Estado>();
 		JSONObject mundoDoAspiradorDePo = new JSONObject(this.conteudoArquivo);
 		JSONObject jsonProblema = mundoDoAspiradorDePo
 				.getJSONObject("problema");
@@ -164,7 +185,7 @@ public class ParserDeProblemas {
 		String aliasEstadoSucessor = jsonTransicao.getString(acao);
 		JSONArray jsonVariaveisDoEstado = jsonEstados
 				.getJSONArray(aliasEstadoSucessor);
-		List<Boolean> variaveisDoEstado = new ArrayList <Boolean> ();
+		List<Boolean> variaveisDoEstado = new ArrayList<Boolean>();
 		for (int j = 0; j < jsonVariaveisDoEstado.length(); j++) {
 			variaveisDoEstado.add(Boolean.valueOf(jsonVariaveisDoEstado
 					.getBoolean(j)));
@@ -178,6 +199,15 @@ public class ParserDeProblemas {
 		return problema;
 	}
 
+	/**
+	 * Dado um alias de estado (e.g. "s0"), carrega o objeto Estado na instância
+	 * do Problema. Entrada: Instância do problema e alias de estado que será
+	 * procurado.
+	 * 
+	 * @param problema
+	 * @param aliasEstado
+	 * @return
+	 */
 	public Estado getEstadoPorAlias(Problema problema, String aliasEstado) {
 		Estado estadoResultante = null;
 		for (Estado estado : problema.getEstados()) {
@@ -191,6 +221,7 @@ public class ParserDeProblemas {
 
 	/**
 	 * Método de testes da classe.
+	 * 
 	 * @param args
 	 * @throws FileNotFoundException
 	 * @throws JSONException
