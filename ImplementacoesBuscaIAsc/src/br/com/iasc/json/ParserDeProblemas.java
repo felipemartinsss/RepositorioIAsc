@@ -16,9 +16,22 @@ import br.com.iasc.beans.Estado;
 import br.com.iasc.beans.Problema;
 import br.com.iasc.io.LeitorDeArquivos;
 
+/**
+ * Classe usada para realiza o parsing dos arquivos .json que 
+ * especificam problemas de Busca.
+ * @author felipemartinsss
+ *
+ */
 public class ParserDeProblemas {
 	private String conteudoArquivo;
 
+	/**
+	 * Construtor.
+	 * Entrada: Recebe um nome de arquivo e 
+	 * carrega o conteúdo do arquivo cujo 
+	 * nome foi fornecido.
+	 * @param nomeArquivo
+	 */
 	public ParserDeProblemas(String nomeArquivo) {
 		try {
 			this.conteudoArquivo = LeitorDeArquivos
@@ -28,6 +41,11 @@ public class ParserDeProblemas {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 * @throws JSONException
+	 */
 	public Problema getProblemaBasico() throws JSONException {
 		JSONObject mundoDoAspiradorDePo = new JSONObject(this.conteudoArquivo);
 		JSONObject jsonProblema = mundoDoAspiradorDePo
@@ -171,6 +189,12 @@ public class ParserDeProblemas {
 		return estadoResultante;
 	}
 
+	/**
+	 * Método de testes da classe.
+	 * @param args
+	 * @throws FileNotFoundException
+	 * @throws JSONException
+	 */
 	public static void main(String[] args) throws FileNotFoundException,
 			JSONException {
 		ParserDeProblemas pp = new ParserDeProblemas(
@@ -180,7 +204,7 @@ public class ParserDeProblemas {
 		problema = pp.carregaEstadosSucessores(problema,
 				problema.getAliasEstadoInicial());
 		System.out
-				.println("Ap��s carregar estados sucessores do estado inicial...");
+				.println("Apos carregar estados sucessores do estado inicial...");
 
 		String acao = "mover_para_sala_esquerda";
 		String estadoHipotetico = "s2";

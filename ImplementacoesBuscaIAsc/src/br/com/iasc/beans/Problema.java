@@ -4,6 +4,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Classe para armazenar as variáveis importante de um problema de 
+ * Busca.
+ * @author felipemartinsss
+ *
+ */
 public class Problema
 {
   private String nome;

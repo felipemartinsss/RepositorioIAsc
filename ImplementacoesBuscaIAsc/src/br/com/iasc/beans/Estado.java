@@ -3,6 +3,11 @@ package br.com.iasc.beans;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Classe para representar um estado em um problema de Busca.
+ * @author felipemartinsss
+ *
+ */
 public class Estado
 {
   private String alias;

@@ -10,15 +10,32 @@ import br.com.iasc.beans.Estado;
 import br.com.iasc.beans.Problema;
 import br.com.iasc.json.ParserDeProblemas;
 
+/**
+ * Implementação do algoritmo conhecido como Busca em Largura.
+ * O algoritmo usa a lista ligada estadosParaExploracao como 
+ * uma fila para definir a ordem de visitação dos estados.
+ * @author felipemartinsss
+ *
+ */
 public class BuscaEmLargura extends Busca {
 	private LinkedList<Estado> estadosParaExploracao;
 
+	/**
+	 * Construtor.
+	 * Entrada: Um parser de problema para carregar dados do JSON e a instância atual do problema 
+	 * a ser resolvido.
+	 * @param pp
+	 * @param problema
+	 */
 	public BuscaEmLargura(ParserDeProblemas pp, Problema problema) {
 		super(pp, problema);
 		this.estadosParaExploracao = new LinkedList <Estado> ();
 		System.out.println("Algoritmo " + getClass().getName());
 	}
 
+	/**
+	 * Método que realiza a busca em largura.
+	 */
 	public List<String> buscarSolucao() throws JSONException {
 		Estado ultimoEstado = null;
 		System.out.println("Estado inicial: "
@@ -65,6 +82,11 @@ public class BuscaEmLargura extends Busca {
 		return getSolucao(ultimoEstado);
 	}
 
+	/** Método principal para a realização de testes.
+	 * 
+	 * @param args
+	 * @throws JSONException
+	 */
 	public static void main(String[] args) throws JSONException {
 		ParserDeProblemas pp = new ParserDeProblemas(
 				"mundo-do-aspirador-de-po-original.json");

@@ -4,6 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Classe usada para ler arquivos.
+ * @author felipemartinsss
+ *
+ */
 public class LeitorDeArquivos {
 	public static String getConteudoArquivo(String nomeArquivo)
 			throws FileNotFoundException {
