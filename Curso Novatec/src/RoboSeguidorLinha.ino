@@ -30,11 +30,11 @@ void loop() {
   int s3 = analogRead(pinSensor3);
   
   /* Leitura e impressão dos valores lidos por cada um dos sensores de refletância a cada execução da função loop. */
-  Serial.print(analogRead(A0));
-  Serial.print(" : ");
-  Serial.print(analogRead(A1));
-  Serial.print(" : ");
-  Serial.println(analogRead(A2));
+  Serial.print (s1);
+  Serial.print (" : ");
+  Serial.print (s2);
+  Serial.print (" : ");
+  Serial.println (s3);
 
   /* Verifica se o valor do sensor 1 corresponde ao preto e se o valor do sensor 3 corresponde ao branco. */
   if (s1 >= preto && s3 < preto) {
@@ -60,18 +60,25 @@ void loop() {
 
 }
 
+/* Recebe uma velocidade e anda para frente com base nessa velocidade. */
 void frente(int velocidade) {
   dualmotor.M1move(velocidade,0);
   dualmotor.M2move(velocidade,0);
 }
+
+/* Recebe uma velocidade e anda para esquerda com base nessa velocidade. */
 void esquerda(int velocidade) {
   dualmotor.M1move(velocidade,1);
   dualmotor.M2move(velocidade,0);
 }
+
+/* Recebe uma velocidade e anda para direita com base nessa velocidade. */
 void direita(int velocidade) {
   dualmotor.M1move(velocidade,0);
   dualmotor.M2move(velocidade,1);
 }
+
+/* Recebe uma velocidade e anda para trás com base nessa velocidade. */
 void tras(int velocidade) {
   dualmotor.M1move(velocidade,1);
   dualmotor.M2move(velocidade,1);
