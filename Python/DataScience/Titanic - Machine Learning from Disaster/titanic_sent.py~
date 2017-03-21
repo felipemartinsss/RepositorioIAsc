@@ -1,10 +1,4 @@
-# -*- coding: utf-8 -*-
-
-# Autor: Felipe Martins dos Santos
-# Kaggle: Titanic - Machine Learning from Disaster
-# IAsc Blog: http://iascblog.wordpress.com
-
-
+# coding: utf-8
 import pandas as pd
 import numpy as np
 from sklearn import svm
@@ -39,20 +33,6 @@ def titanic_dataframe_cleaner (df):
 				df.Name[i] = 'Mrs'
 			
 	df.Cabin.fillna(0, inplace = True)
-	
-	decks = []
-	for i in range(0, len(df.Cabin)):
-		if (df.Cabin[i] == 0):
-			decks.append('Unknown')
-		elif (df.Cabin[i][0] == 'T'):
-			decks.append('A')
-		else:
-			decks.append(df.Cabin[i][0])
-			
-	np_decks = np.array(decks)
-	df['Decks'] = pd.DataFrame(np_decks)
-			
-	
 	for i in range(0, len(df.Cabin)):
 		if (df.Cabin[i] != 0):
 			cabins = df.Cabin[i].split(' ')
@@ -66,24 +46,6 @@ def titanic_dataframe_cleaner (df):
 	df.Fare.fillna(fare_median, inplace = True)
 	df['Fare Per Person'] = df['Fare'] / (df['Family Size'] + 1)
 	df['Age*Class'] = df['Age'] * df['Pclass']
-	df['Richness'] = df['Pclass'] * df['Cabin']
-	df['Richness'] = df['Richness'].astype('float64')
-	age_class = []
-	for age in df.Age:
-		if age <= 12:
-			age_class.append('Child')
-		elif age <= 17:
-			age_class.append('Teenager')
-		elif age <= 30:
-			age_class.append('Young Adult')
-		elif age <= 60:
-			age_class.append('Adult')
-		else:
-			age_class.append('Elderly')
-			
-	np_age_class = np.array(age_class)
-	df_age_class = pd.DataFrame(age_class)
-	df['Age Class'] = df_age_class
 	df = pd.get_dummies(df)
 	return df
 	
@@ -131,7 +93,8 @@ def save_answers(PassengerId, predictions):
 (train, test) = read_train_test_data(train_file, test_file)
 train = titanic_dataframe_cleaner(train)
 test = titanic_dataframe_cleaner(test)
-(X_train, y_train, X_validation, y_validation) = split_train_to_validate(train, 0.66) #0.8443
+#(X_train, y_train, X_validation, y_validation) = split_train_to_validate(train, 0.66) #0.83
+(X_train, y_train, X_validation, y_validation) = split_train_to_validate(train, 0.9) #0.85
 accuracy = get_accuracy_on_validation (X_train, y_train, X_validation, y_validation)
 predictions = get_predictions_for_test(X_train, y_train, test)
 save_answers(test.PassengerId, predictions)
